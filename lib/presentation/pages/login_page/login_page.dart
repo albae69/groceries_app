@@ -30,7 +30,7 @@ class LoginPage extends ConsumerWidget {
     });
 
     void onLogin() async {
-      ref.read(userDataProvider.notifier).login(
+      ref.watch(userDataProvider.notifier).login(
           email: emailController.text, password: passwordController.text);
     }
 

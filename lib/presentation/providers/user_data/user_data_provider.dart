@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:groceries_app/config/config.dart';
 import 'package:groceries_app/domain/model/user.dart';
@@ -22,10 +21,10 @@ class UserData extends _$UserData {
 
     if (token != '') {
       var user = await userRepo.getUser(id: token!);
-      return switch (user) {
-        Success(value: final value) => value,
-        Fail(message: _) => null
-      };
+
+      if (user.result != null) {
+        AsyncData(user);
+      }
     }
   }
 
@@ -54,9 +53,26 @@ class UserData extends _$UserData {
           state = AsyncError(FlutterError(message), StackTrace.current);
           state = const AsyncData(null);
       }
+    } else {
+      state = AsyncError(FlutterError(auth.errorMessage!), StackTrace.current);
+      state = const AsyncData(null);
     }
+  }
 
-    if (auth is Fail) {
+  Future<void> register(
+      {required String name,
+      required String email,
+      required String password}) async {
+    state = const AsyncLoading();
+
+    final auth = await ref
+        .read(authenticationProvider)
+        .register(name: name, email: email, password: password);
+
+    if (auth is Success) {
+      state = AsyncData(User(id: 'id', name: name, email: email));
+      state = const AsyncData(null);
+    } else {
       state = AsyncError(FlutterError(auth.errorMessage!), StackTrace.current);
       state = const AsyncData(null);
     }

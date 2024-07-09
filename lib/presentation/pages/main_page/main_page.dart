@@ -20,6 +20,7 @@ class MainPage extends ConsumerWidget {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool(Config.isLoggedIn, false);
       prefs.setString(Config.token, '');
+      const AsyncData(null);
       ref.read(routerProvider).replaceNamed('splash');
     }
 
