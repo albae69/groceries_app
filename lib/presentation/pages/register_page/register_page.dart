@@ -106,25 +106,7 @@ class RegisterPage extends ConsumerWidget {
                               ),
                               backgroundColor: ThemeConfig.primaryColor),
                           child: switch (ref.watch(userDataProvider)) {
-                            AsyncData(value: final value) => value == null
-                                ? const Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Center(
-                                    child: SizedBox(
-                                      height: 18,
-                                      width: 18,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 1,
-                                      ),
-                                    ),
-                                  ),
-                            _ => const Center(
+                            AsyncLoading() => const Center(
                                 child: SizedBox(
                                   height: 18,
                                   width: 18,
@@ -134,6 +116,13 @@ class RegisterPage extends ConsumerWidget {
                                   ),
                                 ),
                               ),
+                            _ => const Text(
+                                'Register',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              )
                           }),
                     ),
                     Row(

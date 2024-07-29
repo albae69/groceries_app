@@ -10,9 +10,11 @@ class RemoteProductRepository implements ProductRepository {
   RemoteProductRepository({Dio? dio}) : _dio = dio ?? Dio();
 
   @override
-  Future<Result<List<Product>>> getListProduct() async {
+  Future<Result<List<Product>>> getListProduct(
+      {Map<String, dynamic>? params}) async {
     try {
-      final response = await _dio?.get('${Config.baseUrl}/products');
+      final response = await _dio?.get('${Config.baseUrl}/products',
+          queryParameters: params);
 
       final data = List<Map<String, dynamic>>.from(response?.data['data']);
 

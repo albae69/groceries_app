@@ -20,7 +20,6 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(seedColor: ThemeConfig.primaryColor),
-        useMaterial3: true,
         textTheme: TextTheme(
           bodyLarge: GoogleFonts.poppins(),
           bodyMedium: GoogleFonts.poppins(),

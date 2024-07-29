@@ -23,9 +23,11 @@ class LoginPage extends ConsumerWidget {
         if (next.value != null) {
           print('userDataProvider: ${next.value}');
           ref.read(routerProvider).goNamed('main');
+          return;
         }
       } else if (next is AsyncError) {
         context.showSnackBar(next.error.toString());
+        return;
       }
     });
 
@@ -107,25 +109,7 @@ class LoginPage extends ConsumerWidget {
                               ),
                               backgroundColor: ThemeConfig.primaryColor),
                           child: switch (ref.watch(userDataProvider)) {
-                            AsyncData(:final value) => value == null
-                                ? const Text(
-                                    'Log In',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Center(
-                                    child: SizedBox(
-                                      height: 18,
-                                      width: 18,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 1,
-                                      ),
-                                    ),
-                                  ),
-                            _ => const Center(
+                            AsyncLoading() => const Center(
                                 child: SizedBox(
                                   height: 18,
                                   width: 18,
@@ -135,6 +119,13 @@ class LoginPage extends ConsumerWidget {
                                   ),
                                 ),
                               ),
+                            _ => const Text(
+                                'Log In',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              )
                           }),
                     ),
                     verticalSpace(25),

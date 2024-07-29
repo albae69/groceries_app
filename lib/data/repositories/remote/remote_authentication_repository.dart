@@ -14,6 +14,8 @@ class RemoteAuthenticationRepository implements Authentication {
     try {
       final response = await _dio!.post('${Config.baseUrl}/auth/login',
           data: {'email': email, 'password': password});
+
+      print('response login :$response');
       final result = Map<String, dynamic>.from(response?.data);
 
       if (result['success']) {
@@ -22,9 +24,14 @@ class RemoteAuthenticationRepository implements Authentication {
         return Result.fail(result['message']);
       }
     } on DioException catch (e) {
+      print("err on login: $e");
       var err = e?.response?.data;
       print('error login authentication repository : $err');
-      return Result.fail(err['message']);
+      if (err == null) {
+        return Result.fail('Something wrong!');
+      } else {
+        return Result.fail(err['message']);
+      }
     }
   }
 

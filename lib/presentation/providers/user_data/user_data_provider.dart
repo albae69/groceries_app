@@ -15,19 +15,26 @@ class UserData extends _$UserData {
   @override
   Future<User?> build() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userRepo = ref.read(userRepositoryProvider);
 
-    var token = prefs.getString(Config.token);
+    final token = prefs.getString(Config.token);
 
-    if (token != '') {
-      var user = await userRepo.getUser(id: token!);
+    if (token != null && token != '') {
+      final response =
+          await ref.read(userRepositoryProvider).getUser(id: token);
 
-      if (user.result != null) {
-        AsyncData(user);
+      switch (response) {
+        case Success(value: final user):
+          state = AsyncData(user);
+          _getProducts();
+          return user;
+        case Fail(message: _):
+          state = const AsyncData(null);
+          return null;
       }
     }
   }
 
+  @override
   Future<void> login({required String email, required String password}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 

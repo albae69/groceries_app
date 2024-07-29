@@ -10,16 +10,21 @@ class Product with _$Product {
     required String description,
     required String imageUrl,
     required double price,
-    required String createdAt,
-    required String updatedAt,
+    String? createdAt,
+    String? updatedAt,
+    bool? isExlusive,
+    bool? isBestSelling,
   }) = _Product;
 
   factory Product.fromJSON(Map<String, dynamic> json) => Product(
-      productId: json['product_id'],
-      productName: json['product_name'],
-      description: json['description'],
-      imageUrl: json['image_url'],
-      price: double.parse(json['price']),
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at']);
+        productId: json['product_id'],
+        productName: json['product_name'],
+        description: json['description'],
+        imageUrl: json['image_url'],
+        price: double.parse(json['price']),
+        createdAt: json['created_at'],
+        updatedAt: json['updated_at'],
+        isExlusive: json['is_exclusive'],
+        isBestSelling: json['is_best_selling'],
+      );
 }

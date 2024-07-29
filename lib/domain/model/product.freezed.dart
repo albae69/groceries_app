@@ -21,8 +21,10 @@ mixin _$Product {
   String get description => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
-  String get createdAt => throw _privateConstructorUsedError;
-  String get updatedAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+  bool? get isExlusive => throw _privateConstructorUsedError;
+  bool? get isBestSelling => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductCopyWith<Product> get copyWith => throw _privateConstructorUsedError;
@@ -39,8 +41,10 @@ abstract class $ProductCopyWith<$Res> {
       String description,
       String imageUrl,
       double price,
-      String createdAt,
-      String updatedAt});
+      String? createdAt,
+      String? updatedAt,
+      bool? isExlusive,
+      bool? isBestSelling});
 }
 
 /// @nodoc
@@ -61,8 +65,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? description = null,
     Object? imageUrl = null,
     Object? price = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? isExlusive = freezed,
+    Object? isBestSelling = freezed,
   }) {
     return _then(_value.copyWith(
       productId: null == productId
@@ -85,14 +91,22 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      isExlusive: freezed == isExlusive
+          ? _value.isExlusive
+          : isExlusive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isBestSelling: freezed == isBestSelling
+          ? _value.isBestSelling
+          : isBestSelling // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -110,8 +124,10 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String description,
       String imageUrl,
       double price,
-      String createdAt,
-      String updatedAt});
+      String? createdAt,
+      String? updatedAt,
+      bool? isExlusive,
+      bool? isBestSelling});
 }
 
 /// @nodoc
@@ -130,8 +146,10 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? description = null,
     Object? imageUrl = null,
     Object? price = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? isExlusive = freezed,
+    Object? isBestSelling = freezed,
   }) {
     return _then(_$ProductImpl(
       productId: null == productId
@@ -154,14 +172,22 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      isExlusive: freezed == isExlusive
+          ? _value.isExlusive
+          : isExlusive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isBestSelling: freezed == isBestSelling
+          ? _value.isBestSelling
+          : isBestSelling // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -175,8 +201,10 @@ class _$ProductImpl implements _Product {
       required this.description,
       required this.imageUrl,
       required this.price,
-      required this.createdAt,
-      required this.updatedAt});
+      this.createdAt,
+      this.updatedAt,
+      this.isExlusive,
+      this.isBestSelling});
 
   @override
   final String productId;
@@ -189,13 +217,17 @@ class _$ProductImpl implements _Product {
   @override
   final double price;
   @override
-  final String createdAt;
+  final String? createdAt;
   @override
-  final String updatedAt;
+  final String? updatedAt;
+  @override
+  final bool? isExlusive;
+  @override
+  final bool? isBestSelling;
 
   @override
   String toString() {
-    return 'Product(productId: $productId, productName: $productName, description: $description, imageUrl: $imageUrl, price: $price, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Product(productId: $productId, productName: $productName, description: $description, imageUrl: $imageUrl, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, isExlusive: $isExlusive, isBestSelling: $isBestSelling)';
   }
 
   @override
@@ -215,12 +247,25 @@ class _$ProductImpl implements _Product {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.isExlusive, isExlusive) ||
+                other.isExlusive == isExlusive) &&
+            (identical(other.isBestSelling, isBestSelling) ||
+                other.isBestSelling == isBestSelling));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, productId, productName,
-      description, imageUrl, price, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      productId,
+      productName,
+      description,
+      imageUrl,
+      price,
+      createdAt,
+      updatedAt,
+      isExlusive,
+      isBestSelling);
 
   @JsonKey(ignore: true)
   @override
@@ -236,8 +281,10 @@ abstract class _Product implements Product {
       required final String description,
       required final String imageUrl,
       required final double price,
-      required final String createdAt,
-      required final String updatedAt}) = _$ProductImpl;
+      final String? createdAt,
+      final String? updatedAt,
+      final bool? isExlusive,
+      final bool? isBestSelling}) = _$ProductImpl;
 
   @override
   String get productId;
@@ -250,9 +297,13 @@ abstract class _Product implements Product {
   @override
   double get price;
   @override
-  String get createdAt;
+  String? get createdAt;
   @override
-  String get updatedAt;
+  String? get updatedAt;
+  @override
+  bool? get isExlusive;
+  @override
+  bool? get isBestSelling;
   @override
   @JsonKey(ignore: true)
   _$$ProductImplCopyWith<_$ProductImpl> get copyWith =>

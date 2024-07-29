@@ -44,7 +44,7 @@ class OnboardingPage extends ConsumerWidget {
                     ),
                   ),
                   verticalSpace(40),
-                  Container(
+                  SizedBox(
                     height: 57,
                     width: double.infinity,
                     child: ElevatedButton(
