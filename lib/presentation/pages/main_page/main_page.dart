@@ -8,6 +8,7 @@ import 'package:groceries_app/presentation/pages/shop_page/shop_page.dart';
 import 'package:groceries_app/presentation/providers/user_data/user_data_provider.dart';
 import 'package:groceries_app/presentation/widgets/bottom_nav_bar.dart';
 import 'package:groceries_app/presentation/widgets/bottom_nav_bar_item.dart';
+import 'package:groceries_app/utils/logger.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -23,8 +24,8 @@ class _MainPageState extends ConsumerState<MainPage> {
   @override
   Widget build(BuildContext context) {
     ref.listen(userDataProvider, (prev, next) {
-      print('userDataProvider prev: $prev');
-      print('userDataProvider next: $next');
+      logger.d('userDataProvider prev: $prev');
+      logger.d('userDataProvider next: $next');
     });
 
     return Scaffold(

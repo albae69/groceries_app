@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groceries_app/presentation/misc/methods.dart';
 import 'package:groceries_app/config/theme/theme.dart';
+import 'package:groceries_app/presentation/pages/shop_page/methods/list_product.dart';
+import 'package:groceries_app/presentation/pages/shop_page/methods/promo_slider.dart';
+import 'package:groceries_app/presentation/providers/products/products_best_selling_provider.dart';
+import 'package:groceries_app/presentation/providers/products/products_exclusive_provider.dart';
+import 'package:groceries_app/presentation/providers/products/products_provider.dart';
 import 'package:groceries_app/presentation/widgets/search_text_edit.dart';
 
 class ShopPage extends ConsumerWidget {
@@ -15,7 +20,7 @@ class ShopPage extends ConsumerWidget {
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
+          child: ListView(
             children: [
               Center(
                 child: Column(
@@ -47,9 +52,21 @@ class ShopPage extends ConsumerWidget {
                     ),
                     verticalSpace(20),
                     // promo slider
+                    const PromoSlider(),
+                    verticalSpace(30),
+                    ListProduct(
+                      title: 'Exclusive Offer',
+                      data: ref.watch(productsExclusiveProvider).value,
+                    ),
+                    verticalSpace(30),
+                    ListProduct(
+                      title: 'Best Selling',
+                      data: ref.watch(productsBestSellingProvider).value,
+                    ),
                     // exclusive offer
                     // best selling
                     // groceries
+                    verticalSpace(100),
                   ],
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:groceries_app/config/config.dart';
 import 'package:groceries_app/data/repositories/product_repository/product_repository.dart';
 import 'package:groceries_app/domain/model/product.dart';
 import 'package:groceries_app/domain/result.dart';
+import 'package:groceries_app/utils/logger.dart';
 
 class RemoteProductRepository implements ProductRepository {
   final Dio? _dio;
@@ -20,11 +21,11 @@ class RemoteProductRepository implements ProductRepository {
 
       final result = data.map((e) => Product.fromJSON(e)).toList();
 
-      print('results: $result');
+      logger.d('results: $result');
 
       return Result.success(result);
     } on DioException catch (e) {
-      print('error while get list product : ${e.message!}');
+      logger.e('error while get list product', error: e.message);
       return Result.fail(e.message!);
     }
   }

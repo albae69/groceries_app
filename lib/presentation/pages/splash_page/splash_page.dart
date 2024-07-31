@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groceries_app/config/config.dart';
-import 'package:groceries_app/config/theme/theme.dart';
 import 'package:groceries_app/presentation/providers/router/router_provider.dart';
+import 'package:groceries_app/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
@@ -21,10 +21,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       var isLoggedIn = prefs.getBool(Config.isLoggedIn) ?? false;
-      print('isLoggedIn runType: ${isLoggedIn.runtimeType}');
-      print('isLoggedIn: ${isLoggedIn}');
+      logger.d('isLoggedIn runType: ${isLoggedIn.runtimeType}');
+      logger.d('isLoggedIn: ${isLoggedIn}');
 
-      if (isLoggedIn!) {
+      if (isLoggedIn) {
         ref.read(routerProvider).goNamed('main');
       } else {
         ref.read(routerProvider).goNamed('onboarding');

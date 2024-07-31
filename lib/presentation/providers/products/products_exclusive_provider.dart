@@ -6,19 +6,19 @@ import 'package:groceries_app/presentation/providers/product_repository_provider
 import 'package:groceries_app/utils/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'products_provider.g.dart';
+part 'products_exclusive_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class Products extends _$Products {
+class ProductsExclusive extends _$ProductsExclusive {
   @override
   Future<List<Product>> build() async => [];
 
-  Future<void> getListProduct(
-      {int page = 1, Map<String, dynamic>? params}) async {
+  Future<void> getListProductExclusive({int page = 1}) async {
     try {
       state = const AsyncLoading();
       final productRepository = ref.read(productRepositoryProvider);
-      final results = await productRepository.getListProduct(params: params);
+      final results = await productRepository
+          .getListProduct(params: {'is_exclusive': true});
 
       switch (results) {
         case Success(value: final value):
@@ -28,7 +28,8 @@ class Products extends _$Products {
           state = const AsyncData([]);
       }
     } on DioException catch (e) {
-      logger.e('error getListProduct from provider:', error: e.message);
+      logger.e('error getListProductExclusive from provider: ',
+          error: e.message);
       state = AsyncError(FlutterError(e.message!), StackTrace.current);
       state = const AsyncData([]);
     }

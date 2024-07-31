@@ -3,8 +3,10 @@ import 'package:groceries_app/config/config.dart';
 import 'package:groceries_app/domain/model/user.dart';
 import 'package:groceries_app/domain/result.dart';
 import 'package:groceries_app/presentation/providers/authentication/authentication_provider.dart';
-import 'package:groceries_app/presentation/providers/products/products_provider.dart';
+import 'package:groceries_app/presentation/providers/products/products_best_selling_provider.dart';
+import 'package:groceries_app/presentation/providers/products/products_exclusive_provider.dart';
 import 'package:groceries_app/presentation/providers/user_repository_provider/user_repository_provider.dart';
+import 'package:groceries_app/utils/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,7 +50,7 @@ class UserData extends _$UserData {
 
     if (auth is Success) {
       var user = await userRepo.getUser(id: auth.result!);
-      print('user data provider: user = $user');
+      logger.d('user data provider: user = $user');
 
       switch (user) {
         case Success(value: final value):
@@ -56,6 +58,7 @@ class UserData extends _$UserData {
           await prefs.setBool(Config.isLoggedIn, true);
           state = AsyncData(value);
           _getProducts();
+
         case Fail(:final message):
           state = AsyncError(FlutterError(message), StackTrace.current);
           state = const AsyncData(null);
@@ -86,6 +89,7 @@ class UserData extends _$UserData {
   }
 
   void _getProducts() {
-    ref.read(productsProvider.notifier).getListProduct();
+    ref.read(productsExclusiveProvider.notifier).getListProductExclusive();
+    ref.read(productsBestSellingProvider.notifier).getListProductBestSelling();
   }
 }

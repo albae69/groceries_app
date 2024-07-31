@@ -2,6 +2,7 @@ import 'package:groceries_app/config/config.dart';
 import 'package:groceries_app/data/repositories/authentication/authentication.dart';
 import 'package:dio/dio.dart';
 import 'package:groceries_app/domain/result.dart';
+import 'package:groceries_app/utils/logger.dart';
 
 class RemoteAuthenticationRepository implements Authentication {
   final Dio? _dio;
@@ -15,7 +16,7 @@ class RemoteAuthenticationRepository implements Authentication {
       final response = await _dio!.post('${Config.baseUrl}/auth/login',
           data: {'email': email, 'password': password});
 
-      print('response login :$response');
+      logger.d('response login :$response');
       final result = Map<String, dynamic>.from(response?.data);
 
       if (result['success']) {
@@ -24,9 +25,9 @@ class RemoteAuthenticationRepository implements Authentication {
         return Result.fail(result['message']);
       }
     } on DioException catch (e) {
-      print("err on login: $e");
+      logger.e("err on login: ", error: e);
       var err = e?.response?.data;
-      print('error login authentication repository : $err');
+      logger.e('error login authentication repository', error: e.message);
       if (err == null) {
         return Result.fail('Something wrong!');
       } else {
@@ -52,7 +53,8 @@ class RemoteAuthenticationRepository implements Authentication {
       }
     } on DioException catch (e) {
       var err = e?.response?.data;
-      print('error register authentication repository : $err');
+      logger.e('error register authentication repository : ',
+          error: err['message']);
       return Result.fail(err['message']);
     }
   }

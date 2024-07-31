@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groceries_app/config/theme/theme.dart';
-import 'package:groceries_app/presentation/misc/build_context_extension.dart';
+import 'package:groceries_app/presentation/extension/build_context_extension.dart';
 import 'package:groceries_app/presentation/misc/methods.dart';
 import 'package:groceries_app/presentation/providers/router/router_provider.dart';
 import 'package:groceries_app/presentation/providers/user_data/user_data_provider.dart';
 import 'package:groceries_app/presentation/widgets/text_edit_template.dart';
+import 'package:groceries_app/utils/logger.dart';
 
 class LoginPage extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
@@ -16,12 +17,12 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(userDataProvider, (prev, next) {
-      print('prev : $prev');
-      print('next : $next');
+      logger.d('prev : $prev');
+      logger.d('next : $next');
 
       if (next is AsyncData) {
         if (next.value != null) {
-          print('userDataProvider: ${next.value}');
+          logger.d('userDataProvider: ${next.value}');
           ref.read(routerProvider).goNamed('main');
           return;
         }
